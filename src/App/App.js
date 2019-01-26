@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.scss';
+import firebase from 'firebase/app';
 import 'firebase/auth';
 
 import Auth from '../components/Auth/Auth';
@@ -16,15 +17,36 @@ class App extends Component {
     connection();
   }
 
-  render() {
-    return (
+  // this.removeListener = firebase.auth().onAuthStateChanged((user) => {
+  //     if (user) {
+  //       this.setState({
+  //         authed: true,
+  //       });
+  //     } else {
+  //       this.setState({
+  //         authed: false,
+  //       });
+  //     }
+  //   });
+  //
+  // componentWillUnmount() {
+  //   this.removeListener();
+  // }
+
+
+    isAuthenticated = (username) => {
+      this.setState({ authed: true });
+    }
+
+    render() {
+      return (
       <div className="App">
        <h1>App</h1>
 
-       <Auth />
+       <Auth isAuthenticated={this.isAuthenticated}/>
       </div>
-    );
-  }
+      );
+    }
 }
 
 export default App;
