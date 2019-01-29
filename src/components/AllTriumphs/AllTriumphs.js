@@ -18,7 +18,7 @@ class AllTriumphs extends React.Component {
     />
     ));
     return (
-    <div className="Triumphs">
+    <div className="Triumphs col">
     {/* <div className="container"> */}
     <h3>Triumphs</h3>
     { TriumphItemComponents }

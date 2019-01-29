@@ -10,6 +10,7 @@ class TriumphsItem extends React.Component {
           <div className="row">
             <h3>{triumph.name}</h3>
             <img src={triumph.icon} alt="triumphImage"></img>
+            <button className="btn btn-light">Track</button>
           </div>
         </div>
       </div>
