@@ -10,7 +10,12 @@ import MyNavbar from '../components/MyNavbar/MyNavbar';
 import authRequests from '../helpers/data/authRequests';
 import Auth from '../components/Auth/Auth';
 import AllTriumphs from '../components/AllTriumphs/AllTriumphs';
-import getAllTriumphs from '../helpers/data/triumphRequests';
+import CompletedTriumphs from '../components/CompletedTriumphs/CompletedTriumphs';
+import FeaturedTriumph from '../components/FeaturedTriumph/FeaturedTriumph';
+import InProgressTriumph from '../components/InProgressTriumph/InProgressTriumph';
+
+// import triumphRequests from '../helpers/data/triumphRequests';
+import smashRequests from '../helpers/data/smashRequests';
 
 class App extends Component {
   state = {
@@ -18,20 +23,22 @@ class App extends Component {
     triumphs: [],
   }
 
-  componentDidMount() {
-    connection();
-
-    getAllTriumphs()
+  getAllTriumphs() {
+    smashRequests.getAllTriumphsWithUser()
       .then((triumphs) => {
         this.setState({ triumphs });
       })
       .catch(err => console.error('error with triumphs GET', err));
+  }
 
+  componentDidMount() {
+    connection();
     this.removeListener = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.setState({
           authed: true,
         });
+        this.getAllTriumphs();
       } else {
         this.setState({
           authed: false,
@@ -49,11 +56,16 @@ class App extends Component {
     }
 
     render() {
-      const { authed } = this.state;
+      const { authed, triumphs } = this.state;
       const logoutClickEvent = () => {
         authRequests.logoutUser();
         this.setState({ authed: false });
       };
+
+      const featuredTriumph = triumphs.find(x => x.isFeatured);
+      const completedTriumphs = triumphs.filter(x => x.isCompleted);
+      // inProgressTriumph may need tweaking but this is a placeholder
+      const inProgressTriumph = triumphs.filter(x => x.isInProgress);
 
       if (!authed) {
         return (
@@ -67,6 +79,10 @@ class App extends Component {
       <div className="App">
       <MyNavbar isAuthed={authed} logoutClickEvent={logoutClickEvent} />
       <div className="row">
+      {/* the components below need to be tested, their values are placeholders */}
+      <CompletedTriumphs completedTriumphs={completedTriumphs}/>
+      <FeaturedTriumph FeaturedTriumph={featuredTriumph}/>
+      <InProgressTriumph InProgressTriumph={inProgressTriumph}/> */}
       <AllTriumphs triumphs={this.state.triumphs}/>
           <h1>App</h1>
           <p>You are authenticated</p>
