@@ -27,6 +27,7 @@ class App extends Component {
     smashRequests.getAllTriumphsWithUser()
       .then((triumphs) => {
         this.setState({ triumphs });
+        console.log(triumphs);
       })
       .catch(err => console.error('error with triumphs GET', err));
   }
@@ -62,10 +63,15 @@ class App extends Component {
         this.setState({ authed: false });
       };
 
+      // console.log(triumphs);
+
       const featuredTriumph = triumphs.find(x => x.isFeatured);
+      console.log('featuredTriumph', featuredTriumph);
       const completedTriumphs = triumphs.filter(x => x.isCompleted);
       // inProgressTriumph may need tweaking but this is a placeholder
       const inProgressTriumph = triumphs.filter(x => x.isInProgress);
+
+      // console.log(featuredTriumph);
 
       if (!authed) {
         return (
@@ -80,12 +86,14 @@ class App extends Component {
       <MyNavbar isAuthed={authed} logoutClickEvent={logoutClickEvent} />
       <div className="row">
       {/* the components below need to be tested, their values are placeholders */}
-      <CompletedTriumphs completedTriumphs={completedTriumphs}/>
-      <FeaturedTriumph FeaturedTriumph={featuredTriumph}/>
-      <InProgressTriumph InProgressTriumph={inProgressTriumph}/> */}
-      <AllTriumphs triumphs={this.state.triumphs}/>
-          <h1>App</h1>
-          <p>You are authenticated</p>
+      <div className="column">
+        <div className="container">
+          <FeaturedTriumph featuredTriumph={featuredTriumph}/>
+          <InProgressTriumph inProgressTriumph={inProgressTriumph}/>
+          <CompletedTriumphs completedTriumphs={completedTriumphs}/>
+        </div>
+      </div>
+        <AllTriumphs triumphs={this.state.triumphs}/>
       </div>
       </div>
       );
