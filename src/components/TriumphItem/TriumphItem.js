@@ -1,4 +1,5 @@
 import React from 'react';
+import './TriumphItem.scss';
 
 class TriumphsItem extends React.Component {
   render() {
@@ -6,11 +7,14 @@ class TriumphsItem extends React.Component {
     return (
       <div className="triumphsItem">
         <div className="container">
-        <h1>triumphs</h1>
           <div className="row">
-            <h3>{triumph.name}</h3>
-            <img src={triumph.icon} alt="triumphImage"></img>
+          <img src={triumph.icon} alt="triumphImage"></img>
+          <div className="col">
+              <h4>{triumph.name}</h4>
+              <p className="description">{triumph.description}</p>
+            </div>
           </div>
+          <button className="btn btn-light">Track</button>
         </div>
       </div>
 

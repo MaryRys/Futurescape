@@ -10,7 +10,12 @@ import MyNavbar from '../components/MyNavbar/MyNavbar';
 import authRequests from '../helpers/data/authRequests';
 import Auth from '../components/Auth/Auth';
 import AllTriumphs from '../components/AllTriumphs/AllTriumphs';
-import getAllTriumphs from '../helpers/data/triumphRequests';
+import CompletedTriumphs from '../components/CompletedTriumphs/CompletedTriumphs';
+import FeaturedTriumph from '../components/FeaturedTriumph/FeaturedTriumph';
+import InProgressTriumph from '../components/InProgressTriumph/InProgressTriumph';
+
+import smashRequests from '../helpers/data/smashRequests';
+import featuredTriumphRequests from '../helpers/data/featuredTriumphRequests';
 
 class App extends Component {
   state = {
@@ -18,20 +23,22 @@ class App extends Component {
     triumphs: [],
   }
 
-  componentDidMount() {
-    connection();
-
-    getAllTriumphs()
+  getAllTriumphs() {
+    smashRequests.getAllTriumphsWithUser()
       .then((triumphs) => {
         this.setState({ triumphs });
       })
       .catch(err => console.error('error with triumphs GET', err));
+  }
 
+  componentDidMount() {
+    connection();
     this.removeListener = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.setState({
           authed: true,
         });
+        this.getAllTriumphs();
       } else {
         this.setState({
           authed: false,
@@ -48,12 +55,25 @@ class App extends Component {
       this.setState({ authed: true });
     }
 
+    deleteOne = (featuredTriumphId) => {
+      featuredTriumphRequests.deleteFeaturedTriumph(featuredTriumphId)
+        .then(() => {
+          this.getAllTriumphs();
+        })
+        .catch(err => console.error('error with deleting single trumph', err));
+    }
+
     render() {
-      const { authed } = this.state;
+      const { authed, triumphs } = this.state;
       const logoutClickEvent = () => {
         authRequests.logoutUser();
         this.setState({ authed: false });
       };
+
+      const featuredTriumph = triumphs.find(x => x.isFeatured);
+      const completedTriumphs = triumphs.filter(x => x.isComplete);
+      // inProgressTriumph may need tweaking but this is a placeholder
+      const inProgressTriumph = triumphs.filter(x => x.isInProgress);
 
       if (!authed) {
         return (
@@ -67,9 +87,17 @@ class App extends Component {
       <div className="App">
       <MyNavbar isAuthed={authed} logoutClickEvent={logoutClickEvent} />
       <div className="row">
-      <AllTriumphs triumphs={this.state.triumphs}/>
-          <h1>App</h1>
-          <p>You are authenticated</p>
+      {/* the components below need to be tested, their values are placeholders */}
+      <div className="column">
+        <div className="container">
+          <FeaturedTriumph
+          featuredTriumph={featuredTriumph}
+          deleteFeaturedTriumph={this.deleteOne}/>
+          <InProgressTriumph inProgressTriumph={inProgressTriumph}/>
+          <CompletedTriumphs completedTriumphs={completedTriumphs}/>
+        </div>
+      </div>
+        <AllTriumphs triumphs={this.state.triumphs}/>
       </div>
       </div>
       );

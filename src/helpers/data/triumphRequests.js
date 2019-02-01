@@ -22,4 +22,6 @@ const getAllTriumphs = () => new Promise((resolve, reject) => {
     });
 });
 
-export default getAllTriumphs;
+export default {
+  getAllTriumphs,
+};
