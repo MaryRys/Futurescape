@@ -13,6 +13,7 @@ const getAllTriumphsWithUser = () => new Promise((resolve, reject) => {
           const triumphs = ts.map(
             t => Object.assign({ ...userTriumphs.find(x => x.triumphId === t.id), ...t }),
           );
+          console.log(triumphs);
           resolve(triumphs);
         });
     });

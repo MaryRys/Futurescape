@@ -10,7 +10,7 @@ const getAllUserTriumphsById = uid => new Promise((resolve, reject) => {
       const userTriumphArray = [];
       if (userTriumphObject != null) {
         Object.keys(userTriumphObject).forEach((userTriumphId) => {
-          userTriumphObject[userTriumphId].id = userTriumphId;
+          userTriumphObject[userTriumphId].userTriumphId = userTriumphId;
           userTriumphArray.push(userTriumphObject[userTriumphId]);
         });
       }

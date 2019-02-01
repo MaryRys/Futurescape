@@ -1,12 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './FeaturedTriumph.scss';
-// import TriumphItem from '../TriumphItem/TriumphItem';
 import triumphsShape from '../../helpers/propz/triumphsShape';
 
 class FeaturedTriumph extends React.Component {
   static propTypes ={
     triumphs: PropTypes.arrayOf(triumphsShape),
+  }
+
+  deleteEvent = (e) => {
+    e.preventDefault();
+    const { deleteFeaturedTriumph, featuredTriumph } = this.props;
+    deleteFeaturedTriumph(featuredTriumph.userTriumphId);
   }
 
   render() {
@@ -24,6 +29,7 @@ class FeaturedTriumph extends React.Component {
             </div>
           </div>
           <button className="btn btn-light">Untrack</button>
+          <button className="btn btn-danger" onClick={this.deleteEvent}>delete</button>
         </div>
       </div>
         );

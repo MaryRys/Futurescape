@@ -14,8 +14,8 @@ import CompletedTriumphs from '../components/CompletedTriumphs/CompletedTriumphs
 import FeaturedTriumph from '../components/FeaturedTriumph/FeaturedTriumph';
 import InProgressTriumph from '../components/InProgressTriumph/InProgressTriumph';
 
-// import triumphRequests from '../helpers/data/triumphRequests';
 import smashRequests from '../helpers/data/smashRequests';
+import featuredTriumphRequests from '../helpers/data/featuredTriumphRequests';
 
 class App extends Component {
   state = {
@@ -27,7 +27,6 @@ class App extends Component {
     smashRequests.getAllTriumphsWithUser()
       .then((triumphs) => {
         this.setState({ triumphs });
-        console.log(triumphs);
       })
       .catch(err => console.error('error with triumphs GET', err));
   }
@@ -56,6 +55,14 @@ class App extends Component {
       this.setState({ authed: true });
     }
 
+    deleteOne = (featuredTriumphId) => {
+      featuredTriumphRequests.deleteFeaturedTriumph(featuredTriumphId)
+        .then(() => {
+          this.getAllTriumphs();
+        })
+        .catch(err => console.error('error with deleting single trumph', err));
+    }
+
     render() {
       const { authed, triumphs } = this.state;
       const logoutClickEvent = () => {
@@ -63,15 +70,10 @@ class App extends Component {
         this.setState({ authed: false });
       };
 
-      // console.log(triumphs);
-
       const featuredTriumph = triumphs.find(x => x.isFeatured);
-      console.log('featuredTriumph', featuredTriumph);
-      const completedTriumphs = triumphs.filter(x => x.isCompleted);
+      const completedTriumphs = triumphs.filter(x => x.isComplete);
       // inProgressTriumph may need tweaking but this is a placeholder
       const inProgressTriumph = triumphs.filter(x => x.isInProgress);
-
-      // console.log(featuredTriumph);
 
       if (!authed) {
         return (
@@ -88,7 +90,9 @@ class App extends Component {
       {/* the components below need to be tested, their values are placeholders */}
       <div className="column">
         <div className="container">
-          <FeaturedTriumph featuredTriumph={featuredTriumph}/>
+          <FeaturedTriumph
+          featuredTriumph={featuredTriumph}
+          deleteFeaturedTriumph={this.deleteOne}/>
           <InProgressTriumph inProgressTriumph={inProgressTriumph}/>
           <CompletedTriumphs completedTriumphs={completedTriumphs}/>
         </div>
