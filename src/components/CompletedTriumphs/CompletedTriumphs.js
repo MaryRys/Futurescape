@@ -28,11 +28,10 @@ class CompletedTriumphs extends React.Component {
       }
       return '';
     };
-    console.log('hi');
     return (
       <div className="completedTriumphs col">
         <h3>Completed</h3>
-        { displayCompletedTriumphs() }
+        {displayCompletedTriumphs}
       </div>
     );
   }

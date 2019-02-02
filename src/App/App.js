@@ -9,6 +9,7 @@ import connection from '../helpers/data/connection';
 import MyNavbar from '../components/MyNavbar/MyNavbar';
 import authRequests from '../helpers/data/authRequests';
 import Auth from '../components/Auth/Auth';
+import Characters from '../components/Characters/Characters';
 import AllTriumphs from '../components/AllTriumphs/AllTriumphs';
 import CompletedTriumphs from '../components/CompletedTriumphs/CompletedTriumphs';
 import FeaturedTriumph from '../components/FeaturedTriumph/FeaturedTriumph';
@@ -16,11 +17,13 @@ import InProgressTriumph from '../components/InProgressTriumph/InProgressTriumph
 
 import smashRequests from '../helpers/data/smashRequests';
 import featuredTriumphRequests from '../helpers/data/featuredTriumphRequests';
+import characterRequests from '../helpers/data/characterRequests';
 
 class App extends Component {
   state = {
     authed: false,
     triumphs: [],
+    characters: [],
   }
 
   getAllTriumphs() {
@@ -31,6 +34,15 @@ class App extends Component {
       .catch(err => console.error('error with triumphs GET', err));
   }
 
+  getCharacters() {
+    const uid = authRequests.getCurrentUid();
+    characterRequests.getCharacters(uid)
+      .then((characters) => {
+        this.setState({ characters });
+      })
+      .catch(err => console.error('error with characters get', err));
+  }
+
   componentDidMount() {
     connection();
     this.removeListener = firebase.auth().onAuthStateChanged((user) => {
@@ -39,6 +51,7 @@ class App extends Component {
           authed: true,
         });
         this.getAllTriumphs();
+        this.getCharacters();
       } else {
         this.setState({
           authed: false,
@@ -85,20 +98,21 @@ class App extends Component {
       }
       return (
       <div className="App">
-      <MyNavbar isAuthed={authed} logoutClickEvent={logoutClickEvent} />
-      <div className="row">
-      {/* the components below need to be tested, their values are placeholders */}
-      <div className="column">
-        <div className="container">
-          <FeaturedTriumph
-          featuredTriumph={featuredTriumph}
-          deleteFeaturedTriumph={this.deleteOne}/>
-          <InProgressTriumph inProgressTriumph={inProgressTriumph}/>
-          <CompletedTriumphs completedTriumphs={completedTriumphs}/>
+        <MyNavbar isAuthed={authed} logoutClickEvent={logoutClickEvent} />
+        <div className="page col">
+          <Characters characters={this.state.characters}/>
+          {/* the components below need to be tested, their values are placeholders */}
+          <div className="triumphsContainer row">
+            <div className="userTriumphsContainer col">
+              <FeaturedTriumph
+              featuredTriumph={featuredTriumph}
+              deleteFeaturedTriumph={this.deleteOne}/>
+              <InProgressTriumph inProgressTriumph={inProgressTriumph}/>
+              <CompletedTriumphs completedTriumphs={completedTriumphs}/>
+            </div>
+              <AllTriumphs triumphs={this.state.triumphs}/>
+          </div>
         </div>
-      </div>
-        <AllTriumphs triumphs={this.state.triumphs}/>
-      </div>
       </div>
       );
     }
