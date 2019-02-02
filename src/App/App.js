@@ -9,6 +9,7 @@ import connection from '../helpers/data/connection';
 import MyNavbar from '../components/MyNavbar/MyNavbar';
 import authRequests from '../helpers/data/authRequests';
 import Auth from '../components/Auth/Auth';
+import Characters from '../components/Characters/Characters';
 import AllTriumphs from '../components/AllTriumphs/AllTriumphs';
 import CompletedTriumphs from '../components/CompletedTriumphs/CompletedTriumphs';
 import FeaturedTriumph from '../components/FeaturedTriumph/FeaturedTriumph';
@@ -97,20 +98,21 @@ class App extends Component {
       }
       return (
       <div className="App">
-      <MyNavbar isAuthed={authed} logoutClickEvent={logoutClickEvent} />
-      <div className="row">
-      {/* the components below need to be tested, their values are placeholders */}
-      <div className="column">
-        <div className="container">
-          <FeaturedTriumph
-          featuredTriumph={featuredTriumph}
-          deleteFeaturedTriumph={this.deleteOne}/>
-          <InProgressTriumph inProgressTriumph={inProgressTriumph}/>
-          <CompletedTriumphs completedTriumphs={completedTriumphs}/>
+        <MyNavbar isAuthed={authed} logoutClickEvent={logoutClickEvent} />
+        <div className="page col">
+          <Characters characters={this.state.characters}/>
+          {/* the components below need to be tested, their values are placeholders */}
+          <div className="triumphsContainer row">
+            <div className="userTriumphsContainer col">
+              <FeaturedTriumph
+              featuredTriumph={featuredTriumph}
+              deleteFeaturedTriumph={this.deleteOne}/>
+              <InProgressTriumph inProgressTriumph={inProgressTriumph}/>
+              <CompletedTriumphs completedTriumphs={completedTriumphs}/>
+            </div>
+              <AllTriumphs triumphs={this.state.triumphs}/>
+          </div>
         </div>
-      </div>
-        <AllTriumphs triumphs={this.state.triumphs}/>
-      </div>
       </div>
       );
     }
