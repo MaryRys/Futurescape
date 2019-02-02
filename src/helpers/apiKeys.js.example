@@ -7,4 +7,9 @@ const apiKeys = {
     storageBucket: '',
     messagingSenderId: '',
   },
-}; 
+  bungieApi: {
+    apiKey: '',
+  },
+};
+
+ export default apiKeys;
