@@ -30,8 +30,8 @@ const getDestinyCharacterIds = (membershipTypeId, destinyProfileId) => new Promi
     });
 });
 
-const getDestinyCharacter = (membershipTypeId, characterId) => new Promise((resolve, reject) => {
-  axios.get(`${bungieBaseUrl}/Destiny2/${membershipTypeId}/Profile/4611686018452963830/Character/${characterId}/?components=200`, { headers: { 'X-API-Key': bungieApiKey } })
+const getDestinyCharacter = (membershipTypeId, characterId, destinyMembershipId) => new Promise((resolve, reject) => {
+  axios.get(`${bungieBaseUrl}/Destiny2/${membershipTypeId}/Profile/${destinyMembershipId}/Character/${characterId}/?components=200`, { headers: { 'X-API-Key': bungieApiKey } })
     .then((result) => {
       const character = result.data.Response.character.data;
       const newCharacter = {

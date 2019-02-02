@@ -16,11 +16,13 @@ import InProgressTriumph from '../components/InProgressTriumph/InProgressTriumph
 
 import smashRequests from '../helpers/data/smashRequests';
 import featuredTriumphRequests from '../helpers/data/featuredTriumphRequests';
+import characterRequests from '../helpers/data/characterRequests';
 
 class App extends Component {
   state = {
     authed: false,
     triumphs: [],
+    characters: [],
   }
 
   getAllTriumphs() {
@@ -31,6 +33,15 @@ class App extends Component {
       .catch(err => console.error('error with triumphs GET', err));
   }
 
+  getCharacters() {
+    const uid = authRequests.getCurrentUid();
+    characterRequests.getCharacters(uid)
+      .then((characters) => {
+        this.setState({ characters });
+      })
+      .catch(err => console.error('error with characters get', err));
+  }
+
   componentDidMount() {
     connection();
     this.removeListener = firebase.auth().onAuthStateChanged((user) => {
@@ -39,6 +50,7 @@ class App extends Component {
           authed: true,
         });
         this.getAllTriumphs();
+        this.getCharacters();
       } else {
         this.setState({
           authed: false,
