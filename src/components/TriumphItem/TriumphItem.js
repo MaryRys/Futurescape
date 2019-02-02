@@ -2,6 +2,12 @@ import React from 'react';
 import './TriumphItem.scss';
 
 class TriumphsItem extends React.Component {
+  deleteEvent = (e) => {
+    e.preventDefault();
+    const { deleteFeaturedTriumph, triumph } = this.props;
+    deleteFeaturedTriumph(triumph.userTriumphId);
+  }
+
   render() {
     const { triumph, status } = this.props;
     const addCompleteDate = () => {
@@ -15,6 +21,14 @@ class TriumphsItem extends React.Component {
       if (status === 'general') {
         return <button className="btn btn-light">Track</button>;
       }
+      if (status === 'featured') {
+        return (
+          <div>
+            <button className="btn btn-danger" onClick={this.deleteEvent}>delete</button>
+            <button className="btn btn-light">Untrack</button>
+          </div>
+        );
+      }
       return '';
     };
 
@@ -24,6 +38,8 @@ class TriumphsItem extends React.Component {
           return 'generalTriumphsItem';
         case 'completed':
           return 'completedTriumphsItem';
+        case 'featured':
+          return 'featuredTriumphsItem';
         default:
           return '';
       }

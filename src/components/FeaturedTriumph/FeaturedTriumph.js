@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import TriumphItem from '../TriumphItem/TriumphItem';
 import './FeaturedTriumph.scss';
 import triumphsShape from '../../helpers/propz/triumphsShape';
 
@@ -8,30 +9,17 @@ class FeaturedTriumph extends React.Component {
     triumphs: PropTypes.arrayOf(triumphsShape),
   }
 
-  deleteEvent = (e) => {
-    e.preventDefault();
-    const { deleteFeaturedTriumph, featuredTriumph } = this.props;
-    deleteFeaturedTriumph(featuredTriumph.userTriumphId);
-  }
-
   render() {
-    const { featuredTriumph } = this.props;
+    const { featuredTriumph, deleteFeaturedTriumph } = this.props;
     const displayTriumph = () => {
       if (featuredTriumph) {
         return (
-          <div className="featTriumphItem">
-        <div className="container">
-          <div className="row">
-          <img src={featuredTriumph.icon} alt="triumphImage"></img>
-          <div className="col">
-              <h4>{featuredTriumph.name}</h4>
-              <p className="description">{featuredTriumph.description}</p>
-            </div>
-          </div>
-          <button className="btn btn-light">Untrack</button>
-          <button className="btn btn-danger" onClick={this.deleteEvent}>delete</button>
-        </div>
-      </div>
+            <TriumphItem
+            triumph={featuredTriumph}
+            status='featured'
+            key={featuredTriumph.id}
+            deleteFeaturedTriumph={deleteFeaturedTriumph}
+            />
         );
       }
       return '';

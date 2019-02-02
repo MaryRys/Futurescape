@@ -11,7 +11,6 @@ class CompletedTriumphs extends React.Component {
 
   render() {
     const { completedTriumphs } = this.props;
-    console.log(completedTriumphs);
     const displayCompletedTriumphs = completedTriumphs.map(triumph => (
       <TriumphItem
       triumph={triumph}
