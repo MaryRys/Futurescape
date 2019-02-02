@@ -1,6 +1,6 @@
 {
-  "user": "fish",
-  "userCharacters": "cow",
+  "users": "fish",
+  "characters": "cow",
   "triumphs": "turtle",
   "userTriumphs": "bear"
-} 
+}
