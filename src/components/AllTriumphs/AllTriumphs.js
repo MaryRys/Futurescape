@@ -14,6 +14,7 @@ class AllTriumphs extends React.Component {
     const TriumphItemComponents = triumphs.map(triumph => (
     <TriumphItem
     triumph={triumph}
+    status='general'
     key={triumph.id}
     />
     ));
