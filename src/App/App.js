@@ -85,6 +85,7 @@ class App extends Component {
 
       const featuredTriumph = triumphs.find(x => x.isFeatured);
       const completedTriumphs = triumphs.filter(x => x.isComplete);
+      console.log(completedTriumphs);
       // inProgressTriumph may need tweaking but this is a placeholder
       const inProgressTriumph = triumphs.filter(x => x.isInProgress);
 
