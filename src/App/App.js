@@ -55,6 +55,17 @@ class App extends Component {
       .catch(err => console.error('error with featured triumph post', err));
   }
 
+  updateIsFeaturedEvent = (userTriumphId, triumph) => {
+    triumphRequests.updateIsFeatured(userTriumphId, triumph)
+      .then(() => {
+        smashRequests.getAllTriumphsWithUser()
+          .then((triumphs) => {
+            this.setState({ triumphs });
+          });
+      })
+      .catch(err => console.error('error with triumph POST', err));
+  };
+
   componentDidMount() {
     connection();
     this.removeListener = firebase.auth().onAuthStateChanged((user) => {
@@ -117,7 +128,8 @@ class App extends Component {
             <div className="userTriumphsContainer col">
               <FeaturedTriumph
               featuredTriumph={featuredTriumph}
-              deleteFeaturedTriumph={this.deleteOne}/>
+              deleteFeaturedTriumph={this.deleteOne}
+              updateIsFeaturedEvent={this.updateIsFeaturedEvent}/>
               <InProgressTriumph inProgressTriumph={inProgressTriumph}/>
               <CompletedTriumphs completedTriumphs={completedTriumphs}/>
             </div>
