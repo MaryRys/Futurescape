@@ -22,6 +22,9 @@ const getAllTriumphs = () => new Promise((resolve, reject) => {
     });
 });
 
+const createFeatured = triumph => axios.post(`${firebaseUrl}/userTriumphs.json`, triumph);
+
 export default {
   getAllTriumphs,
+  createFeatured,
 };
