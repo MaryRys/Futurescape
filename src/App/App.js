@@ -15,6 +15,7 @@ import CompletedTriumphs from '../components/CompletedTriumphs/CompletedTriumphs
 import FeaturedTriumph from '../components/FeaturedTriumph/FeaturedTriumph';
 import InProgressTriumph from '../components/InProgressTriumph/InProgressTriumph';
 
+import triumphRequests from '../helpers/data/triumphRequests';
 import smashRequests from '../helpers/data/smashRequests';
 import featuredTriumphRequests from '../helpers/data/featuredTriumphRequests';
 import characterRequests from '../helpers/data/characterRequests';
@@ -41,6 +42,17 @@ class App extends Component {
         this.setState({ characters });
       })
       .catch(err => console.error('error with characters get', err));
+  }
+
+  createFeaturedEvent = (newFeatured) => {
+    triumphRequests.createFeatured(newFeatured)
+      .then(() => {
+        smashRequests.getAllTriumphsWithUser()
+          .then((triumphs) => {
+            this.setState({ triumphs });
+          });
+      })
+      .catch(err => console.error('error with featured triumph post', err));
   }
 
   componentDidMount() {
@@ -85,8 +97,6 @@ class App extends Component {
 
       const featuredTriumph = triumphs.find(x => x.isFeatured);
       const completedTriumphs = triumphs.filter(x => x.isComplete);
-      console.log(completedTriumphs);
-      // inProgressTriumph may need tweaking but this is a placeholder
       const inProgressTriumph = triumphs.filter(x => x.isInProgress);
 
       if (!authed) {
@@ -111,7 +121,7 @@ class App extends Component {
               <InProgressTriumph inProgressTriumph={inProgressTriumph}/>
               <CompletedTriumphs completedTriumphs={completedTriumphs}/>
             </div>
-              <AllTriumphs triumphs={this.state.triumphs}/>
+              <AllTriumphs triumphs={this.state.triumphs} createFeaturedEvent={this.createFeaturedEvent}/>
           </div>
         </div>
       </div>

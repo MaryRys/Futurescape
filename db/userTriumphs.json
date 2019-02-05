@@ -30,7 +30,6 @@
   },
   "userTriumph5": {
     "triumphId": "triumph5",
-    "scope": 0,
     "isComplete": false,
     "isFeatured": false,
     "uid": "12345"

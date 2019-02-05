@@ -1,11 +1,26 @@
 import React from 'react';
 import './TriumphItem.scss';
 
+import authRequests from '../../helpers/data/authRequests';
+
 class TriumphsItem extends React.Component {
   deleteEvent = (e) => {
     e.preventDefault();
     const { deleteFeaturedTriumph, triumph } = this.props;
     deleteFeaturedTriumph(triumph.userTriumphId);
+  }
+
+  addEvent = (e) => {
+    e.preventDefault();
+    const { createFeaturedEvent, triumph } = this.props;
+    const newFeatured = {
+      triumphId: triumph.id,
+      isComplete: false,
+      completedDate: '',
+      isFeatured: true,
+      uid: authRequests.getCurrentUid(),
+    };
+    createFeaturedEvent(newFeatured);
   }
 
   render() {
@@ -19,7 +34,7 @@ class TriumphsItem extends React.Component {
 
     const addButtons = () => {
       if (status === 'general') {
-        return <button className="btn btn-light">Track</button>;
+        return <button className="btn btn-light" onClick={this.addEvent}>Track</button>;
       }
       if (status === 'featured') {
         return (
@@ -56,7 +71,6 @@ class TriumphsItem extends React.Component {
               {addCompleteDate()}
             </div>
           </div>
-          {/* <button className="btn btn-light">Track</button> */}
           {addButtons()}
         </div>
       </div>

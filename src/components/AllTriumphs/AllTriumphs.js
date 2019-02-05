@@ -10,21 +10,20 @@ class AllTriumphs extends React.Component {
   }
 
   render() {
-    const { triumphs } = this.props;
+    const { triumphs, createFeaturedEvent } = this.props;
     const TriumphItemComponents = triumphs.map(triumph => (
     <TriumphItem
     triumph={triumph}
     status='general'
     key={triumph.id}
+    createFeaturedEvent={createFeaturedEvent}
     />
     ));
     return (
     <div className="Triumphs col">
-    {/* <div className="container"> */}
     <h3>Triumphs</h3>
     { TriumphItemComponents }
     </div>
-    // </div>
     );
   }
 }
