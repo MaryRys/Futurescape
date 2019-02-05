@@ -16,6 +16,7 @@ class TriumphsItem extends React.Component {
     const newFeatured = {
       triumphId: triumph.id,
       isComplete: false,
+      completedDate: '',
       isFeatured: true,
       uid: authRequests.getCurrentUid(),
     };
