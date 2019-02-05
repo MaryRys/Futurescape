@@ -23,6 +23,19 @@ class TriumphsItem extends React.Component {
     createFeaturedEvent(newFeatured);
   }
 
+  editEvent = (e) => {
+    e.preventDefault();
+    const { updateIsFeaturedEvent, triumph } = this.props;
+    const newTriumph = {
+      triumphId: triumph.id,
+      isComplete: true,
+      completedDate: new Date(),
+      isFeatured: false,
+      uid: triumph.uid,
+    };
+    updateIsFeaturedEvent(triumph.userTriumphId, newTriumph);
+  }
+
   render() {
     const { triumph, status } = this.props;
     const addCompleteDate = () => {
@@ -40,7 +53,7 @@ class TriumphsItem extends React.Component {
         return (
           <div>
             <button className="btn btn-danger" onClick={this.deleteEvent}>delete</button>
-            <button className="btn btn-light">Untrack</button>
+            <button className="btn btn-light" onClick={this.editEvent}>Completed</button>
           </div>
         );
       }

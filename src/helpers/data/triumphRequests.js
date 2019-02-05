@@ -24,7 +24,10 @@ const getAllTriumphs = () => new Promise((resolve, reject) => {
 
 const createFeatured = triumph => axios.post(`${firebaseUrl}/userTriumphs.json`, triumph);
 
+const updateIsFeatured = (triumphId, triumph) => axios.put(`${firebaseUrl}/userTriumphs/${triumphId}.json`, triumph);
+
 export default {
   getAllTriumphs,
   createFeatured,
+  updateIsFeatured,
 };

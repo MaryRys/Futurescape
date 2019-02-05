@@ -10,7 +10,7 @@ class FeaturedTriumph extends React.Component {
   }
 
   render() {
-    const { featuredTriumph, deleteFeaturedTriumph } = this.props;
+    const { featuredTriumph, deleteFeaturedTriumph, updateIsFeaturedEvent } = this.props;
     const displayTriumph = () => {
       if (featuredTriumph) {
         return (
@@ -19,6 +19,7 @@ class FeaturedTriumph extends React.Component {
             status='featured'
             key={featuredTriumph.id}
             deleteFeaturedTriumph={deleteFeaturedTriumph}
+            updateIsFeaturedEvent={updateIsFeaturedEvent}
             />
         );
       }
