@@ -9,6 +9,7 @@ import connection from '../helpers/data/connection';
 import MyNavbar from '../components/MyNavbar/MyNavbar';
 import authRequests from '../helpers/data/authRequests';
 import Auth from '../components/Auth/Auth';
+import User from '../components/User/User';
 import Characters from '../components/Characters/Characters';
 import AllTriumphs from '../components/AllTriumphs/AllTriumphs';
 import CompletedTriumphs from '../components/CompletedTriumphs/CompletedTriumphs';
@@ -19,12 +20,23 @@ import triumphRequests from '../helpers/data/triumphRequests';
 import smashRequests from '../helpers/data/smashRequests';
 import featuredTriumphRequests from '../helpers/data/featuredTriumphRequests';
 import characterRequests from '../helpers/data/characterRequests';
+import userRequests from '../helpers/data/userRequests';
 
 class App extends Component {
   state = {
     authed: false,
     triumphs: [],
     characters: [],
+    user: [],
+  }
+
+  getUser() {
+    const uid = authRequests.getCurrentUid();
+    userRequests.getSingleUser(uid)
+      .then((user) => {
+        this.setState({ user });
+      })
+      .catch(err => console.error('error getting User, err'));
   }
 
   getAllTriumphs() {
@@ -73,6 +85,7 @@ class App extends Component {
         this.setState({
           authed: true,
         });
+        this.getUser();
         this.getAllTriumphs();
         this.getCharacters();
       } else {
@@ -122,6 +135,7 @@ class App extends Component {
       <div className="App">
         <MyNavbar isAuthed={authed} logoutClickEvent={logoutClickEvent} />
         <div className="page col">
+          <User user={this.state.user}/>
           <Characters characters={this.state.characters}/>
           {/* the components below need to be tested, their values are placeholders */}
           <div className="triumphsContainer row">
