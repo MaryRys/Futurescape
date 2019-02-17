@@ -7,7 +7,7 @@ class User extends React.Component {
     return (
       <div className='User'>
         <div className="row">
-          <h1 className="Username">{user.displayName}</h1>
+          <h1 className="Username">Welcome, {user.displayName}</h1>
           <img className="userIcon" src={user.bungieMembershipIcon} alt="userIcon"></img>
         </div>
       </div>

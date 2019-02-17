@@ -77,7 +77,7 @@ class TriumphsItem extends React.Component {
       <div className={getComponentClass()}>
         <div className="container">
           <div className="row">
-          <img src={triumph.icon} alt="triumphImage"></img>
+          <img src={triumph.icon} className="icon" alt="triumphImage"></img>
           <div className="col">
               <h4>{triumph.name}</h4>
               <p className="description">{triumph.description}</p>
