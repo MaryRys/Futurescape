@@ -39,6 +39,10 @@ class App extends Component {
       .catch(err => console.error('error getting User, err'));
   }
 
+  // getUserData() {
+  //   const
+  // }
+
   getAllTriumphs() {
     smashRequests.getAllTriumphsWithUser()
       .then((triumphs) => {
