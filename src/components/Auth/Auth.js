@@ -40,7 +40,7 @@ class Auth extends React.Component {
     e.preventDefault();
     authRequests.registerUser(newUser).then((user) => {
       const { uid } = user.user;
-      smashRequests.registerBungieUser(uid, newUser).then(() => {
+      smashRequests.git(uid, newUser).then(() => {
         this.props.isAuthenticated();
       });
     }).catch(err => console.error('error in auth', err));
@@ -104,8 +104,10 @@ class Auth extends React.Component {
                 <option value="254">Bungie.net</option>
               </select>
             </div>
+            <div className="row">
             <button className='btn btn-danger' onClick={this.registerUser}>Register</button>
             <button className='btn btn-info' onClick={this.loginUser}>Login</button>
+            </div>
           </form>
         </div>
       </div>
