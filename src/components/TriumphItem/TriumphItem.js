@@ -51,7 +51,7 @@ class TriumphsItem extends React.Component {
       }
       if (status === 'featured') {
         return (
-          <div>
+          <div className="row">
             <button className="btn btn-danger" onClick={this.deleteEvent}>delete</button>
             <button className="btn btn-light" onClick={this.editEvent}>Completed</button>
           </div>
