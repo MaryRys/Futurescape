@@ -40,7 +40,7 @@ class Auth extends React.Component {
     e.preventDefault();
     authRequests.registerUser(newUser).then((user) => {
       const { uid } = user.user;
-      smashRequests.git(uid, newUser).then(() => {
+      smashRequests.registerBungieUser(uid, newUser).then(() => {
         this.props.isAuthenticated();
       });
     }).catch(err => console.error('error in auth', err));
