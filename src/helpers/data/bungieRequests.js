@@ -19,6 +19,18 @@ const getBungieAccount = bungieId => new Promise((resolve, reject) => {
     });
 });
 
+const getBungieUser = bungieId => new Promise((resolve, reject) => {
+  axios.get(`${bungieBaseUrl}/User/GetBungieAccount/${bungieId}/254/`, { headers: { 'X-API-Key': bungieApiKey } })
+    .then((result) => {
+      const bungieUser = result.data.Response;
+      const destinyProfile = bungieUser.destinyMemberships[0];
+      resolve(destinyProfile);
+    })
+    .catch((error) => {
+      reject(error);
+    });
+});
+
 const getDestinyCharacterIds = (membershipTypeId, destinyProfileId) => new Promise((resolve, reject) => {
   axios.get(`${bungieBaseUrl}/Destiny2/${membershipTypeId}/Profile/${destinyProfileId}/?components=100 `, { headers: { 'X-API-Key': bungieApiKey } })
     .then((result) => {
@@ -54,6 +66,7 @@ const getDestinyCharacter = (membershipTypeId, characterId, destinyMembershipId)
 
 export default {
   getBungieAccount,
+  getBungieUser,
   getDestinyCharacterIds,
   getDestinyCharacter,
 };
