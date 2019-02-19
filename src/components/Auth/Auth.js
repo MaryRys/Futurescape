@@ -104,8 +104,10 @@ class Auth extends React.Component {
                 <option value="254">Bungie.net</option>
               </select>
             </div>
+            <div className="row">
             <button className='btn btn-danger' onClick={this.registerUser}>Register</button>
             <button className='btn btn-info' onClick={this.loginUser}>Login</button>
+            </div>
           </form>
         </div>
       </div>
