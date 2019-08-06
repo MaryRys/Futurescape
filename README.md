@@ -7,16 +7,22 @@ Futurescape is an application that utilizes Bungie's Destiny API to display play
 * HTML5
 * Sass
 * Bootstrap 4
-* React
+* React JS
 * Jquery
 * Github Version Control
 * Destiny API (https://bungie-net.github.io/multi/index.html)
+* Google Firebase user auth
 
 ### How to run this app
 * This page can be accessed at: https://futurescape-c5f06.firebaseapp.com/ 
 you will need a bungie account to login (https://www.bungie.net/).
 
 ### Screenshot(s)
+
+### Login Screen requires an email, password, and Bungie Id
+<img src="./public/images/img2.png">
+
+### User dashboard where 3 in-game characters populate, and the user can select triumphs to track.
 <img src="./public/images/img1.png">
 
 ### Contributors
